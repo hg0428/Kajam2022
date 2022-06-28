@@ -5,3 +5,47 @@ html, body {
   padding: 0;
   overflow: hidden;
 }
+#inventory {
+  background: rgba(190, 20, 0, 0.3);
+  opacity: 0.8;
+  width: 70%;
+  height: 70%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  /*grid-template-columns: 1fr 1fr 1fr;*/
+}
+.slot {
+  background: rgba(10, 190, 23, 0.4);
+  border: 1px solid yellow;
+}
+.slot img {
+  position: relative;
+  width: 40px;
+  left: 45%;
+  top: 44%;
+  transform: translate(-50%, -50%);
+}
+.slot span {
+  position: relative;
+  bottom: 0;
+  text-align: center;
+  margin: auto;
+  width: auto;
+}
+@media screen and (max-width: 640px) {
+  #inventory {
+    width: 99%;
+    height: 90%;
+  }
+}
+@media screen and (max-width: 400px) {
+  #inventory {
+    width: 99%;
+    height:99%;
+    grid-template-columns: repeat(5, auto);
+  }
+}
