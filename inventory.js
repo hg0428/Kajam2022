@@ -66,5 +66,14 @@ let milk = new Ingredient(-5, 'Milk', 'milk.png');
 let p1 = new Pepper(3, 'Sweet');
 let ghost = new Pepper(8, 'Ghost');
 let hs = new Hotsauce(milk, ghost, ghost);
-inventory.add(hs)
+inventory.add(hs);
 inventory.add(milk);
+inventory.add(milk);
+inventory.add(ghost);
+inventory.add(p1);
+inventory.add(milk);
+inventory.add(ghost);
+inventory.add(p1);inventory.add(milk);
+inventory.add(ghost);
+inventory.add(p1);
+inventory.add(hs);

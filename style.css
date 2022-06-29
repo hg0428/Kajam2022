@@ -6,17 +6,21 @@ html, body {
   overflow: hidden;
 }
 #inventory {
+  background:rgba(50, 50, 50, 0.2);
+  backdrop-filter: blur(0.7em);
+  -webkit-backdrop-filter: blur(0.7em);
   overflow: hidden;
-  border-radius: 7%;
   display: grid;
-  opacity: 0.8;
-  width: 85%;
-  height: 85%;
+  /*opacity: 0.8;*/
+  width: 100%;
+  height: 100%;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   position: fixed;
-  grid-template-columns: repeat(6, auto);
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 10px;
   /*grid-template-columns: 1fr 1fr 1fr;*/
   /*transition: 0.2s;
   Transition makes it look weird.
@@ -24,15 +28,19 @@ html, body {
 }
 .slot {
   position: relative;
-  background: rgba(50, 150, 95, 0.85);
-  border: 0.5px solid rgb(210, 240, 90);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  /*display: flex;*/
 }
 .slot img {
+  display:block;
+  margin:auto;
   position: relative;
-  width: 42px;
-  left: 45%;
+  width: 30%;
+  /*left: 45%;*/
   top: 44%;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
+  border: 1px solid black;
 }
 .slot span {
   position: absolute;
@@ -47,7 +55,7 @@ html, body {
 }
 .slot p {
   font-family: sans-serif;
-  color:red;
+  color:orange;
   position: absolute;
   top: 40%;
   left: 50%;
@@ -58,9 +66,7 @@ html, body {
 }
 @media screen and (max-width: 640px) {
   #inventory {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
+    
   }
 }
 @media screen and (max-width: 400px) {
