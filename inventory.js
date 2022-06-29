@@ -68,7 +68,7 @@ let milk = new Ingredient(-5, 'Milk', 'milk.png');
 let p1 = new Pepper(3, 'Sweet');
 let ghost = new Pepper(8, 'Ghost');
 let hs = new Hotsauce(milk, ghost, ghost);
-let jalapeño = new Ingredient(5, 'jalapeño', 'jalapeño.png', 3)
+let jalapeno = new Ingredient(5, 'jalapeno', 'jalapeno.png', 3)
 inventory.add(hs);
 inventory.add(milk);
 inventory.add(milk);
@@ -80,4 +80,4 @@ inventory.add(p1);inventory.add(milk);
 inventory.add(ghost);
 inventory.add(p1);
 inventory.add(hs);
-inventory.add(jalapeño);
+inventory.add(jalapeno);
