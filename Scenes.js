@@ -21,8 +21,8 @@ function loadScene(player, things = []) {
   for (let t of things) {
     if (t.custom.physics) Physics.push(t);
   }
-  ground.collided(Physics, (axis, side, g, other) => {
-    other.bottom = g.top;
-    other.vel.y = 0;
+  ground.collided(Physics, event => {
+    event.other.bottom = ground.top;
+    event.other.vel.y = 0;
   });
 }

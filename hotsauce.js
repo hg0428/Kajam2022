@@ -1,12 +1,14 @@
 class Ingredient {
-  constructor(spiciness, name) {
+  constructor(spiciness, name, img='') {
     this.spiciness = spiciness; //–10 — 10
     this.name = name;
+    this.img = img;
   }
 }
 class Pepper extends Ingredient {
   constructor(spiciness, name, growth) {
     super(spiciness, name + ' pepper')
+    this.img = 'pepper.png';
     this.growth = growth; //out of 10
     this.iSeeds = growth === 0; //is seeds
     this.planted = false;
@@ -45,8 +47,15 @@ class Hotsauce {
     });
     this.name = list[0][0] + '-' + list[1][0] + ' Hotsauce';
     this.spiciness /= ingredients.length;
-    if (this.spiciness > 8) this.name = 'Fiery ' + this.name;
-    else if (this.spiciness >= 6) this.name = 'Spicy ' + this.name;
+    this.img = 'Hotsauces/mild.png'
+    if (this.spiciness > 8) {
+      this.img = 'Hotsauces/firey.png';
+      this.name = 'Fiery ' + this.name;
+    }
+    else if (this.spiciness >= 6) {
+      this.img = 'Hotsauces/hot.png'
+      this.name = 'Spicy ' + this.name;
+    }
     else if (this.spiciness >= 3) this.name = 'Mild ' + this.name;
     else if (this.spiciness <= -8) this.name = 'Restoritive ' + this.name;
     else if (this.spiciness <= -6) this.name = 'Mending ' + this.name;
@@ -54,8 +63,3 @@ class Hotsauce {
     else if (this.spiciness < 3) this.name = 'Blunt ' + this.name;
   }
 }
-let milk = new Ingredient(-5, 'Milk');
-let p1 = new Ingredient(3, 'Sweet');
-let ghost = new Ingredient(8, 'Ghost');
-let hs = new Hotsauce(milk, milk, ghost);
-console.log(hs);
