@@ -1,13 +1,15 @@
 class Ingredient {
-  constructor(spiciness, name, img='') {
+  constructor(spiciness, name, img, imgScale) {
     this.spiciness = spiciness; //–10 — 10
+    this.imgScale = imgScale || 1;
     this.name = name;
-    this.img = img;
+    this.img = img || '';
   }
 }
 class Pepper extends Ingredient {
   constructor(spiciness, name, growth) {
-    super(spiciness, name + ' pepper')
+    super(spiciness, name + ' pepper');
+    this.imgScale = 1.25;
     this.img = 'pepper.png';
     this.growth = growth; //out of 10
     this.iSeeds = growth === 0; //is seeds
@@ -45,6 +47,7 @@ class Hotsauce {
     list.sort((a, b) => {
       return b[1] - a[1];
     });
+    this.imgScale = 0.85;
     this.name = list[0][0] + '-' + list[1][0] + ' Hotsauce';
     this.spiciness /= ingredients.length;
     this.img = 'Hotsauces/mild.png'

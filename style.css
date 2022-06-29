@@ -4,9 +4,11 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
 }
 #inventory {
-  background:rgba(50, 50, 50, 0.2);
+  background:rgba(50, 50, 50, 0.3);
   backdrop-filter: blur(0.4em);
   -webkit-backdrop-filter: blur(0.4em);
   overflow: hidden;
@@ -18,18 +20,20 @@ html, body {
   top: 50%;
   transform: translate(-50%, -50%);
   position: fixed;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
   /*grid-template-columns: 1fr 1fr 1fr;*/
   /*transition: 0.2s;
   Transition makes it look weird.
   */
 }
 .slot {
+  margin: 10px;
+  aspect-ratio: 1;
   position: relative;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 5px;
   /*display: flex;*/
 }
 .slot img {
@@ -38,9 +42,8 @@ html, body {
   position: relative;
   width: 30%;
   /*left: 45%;*/
-  top: 44%;
+  top: 50%;
   transform: translateY(-50%);
-  border: 1px solid black;
 }
 .slot span {
   position: absolute;
@@ -54,19 +57,19 @@ html, body {
   letter-spacing: 0.8px;
 }
 .slot p {
+  width:100%;
   font-family: sans-serif;
   color:orange;
   position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 22%;
+  transform: translateY(-50%);
   text-align: center;
   font-size: 35px;
   font-weight: 800px;
 }
 @media screen and (max-width: 640px) {
   #inventory {
-    
+    gap: 10px;
   }
 }
 @media screen and (max-width: 400px) {
@@ -74,7 +77,8 @@ html, body {
     width: 125%;
     height: 125%;
     transform: translate(-50%, -50%) scale(0.8);
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(4, auto);
+    gap: 1px;
   }
 }
 @media screen and (max-width: 300px) {
@@ -82,5 +86,44 @@ html, body {
     width: 142.8%;
     height: 142.8%;
     transform: translate(-50%, -50%) scale(0.7);
+    gap: 0px;
   }
+}
+#touchbar {
+  display: block;
+  position: fixed;
+  bottom: 50px;
+  left: 50px;
+  height:100px;
+  width: 100%;
+}
+.touch {
+  cursor: pointer;
+  font-size: 75px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 10px;
+  width: 75px;
+  height: 75px;
+  opacity: 0.7;
+  background: rgba(200, 200, 200, 0.65);
+  backdrop-filter: blur(0.2em);
+  -webkit-backdrop-filter: blur(0.2em);
+  border: 4px outset rgba(150, 150, 150, 0.4);
+  display: none;
+}
+.touch:active {
+  border-style: inset;
+  border-color: rgba(150, 150, 150, 0.2);
+  background: rgba(100, 100, 100, 0.65);
+}
+#button-jump {
+  position: fixed;
+  right: 100px;
+}
+#button-inventory {
+  position: fixed;
+  top:20px;
+  right:10px;
+  z-index: 10;
 }

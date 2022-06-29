@@ -2,6 +2,9 @@
 const game = new Game({
 
 });
+window.onscroll = function() {
+  window.scrollTo(0, 0);
+};
 const ground = new game.Thing({
   background: 'green',
   width: 2000,
@@ -14,7 +17,9 @@ var player = new game.Thing({
   height: 30,
   bottom: ground.top
 });
-loadScene(player, [new game.Thing({ name: 'block', background: 'red', custom: { physics: true } })]);
+loadScene(player, [
+  new game.Thing({ name: 'block', background: 'red', custom: { physics: true } })
+]);
 reset();
 function reset() {
   player.collided(Physics, event => {
@@ -48,34 +53,34 @@ KEYS.bindKeyHold(['w', 'ArrowUp'], (e) => {
   }
 });
 
-
-KEYS.bindKeyPressed('i', () => {inventory.toggle()});
-KEYS.bindKeyHold(['a', 'ArrowLeft'], e => { player.vel.x = -200; })
-KEYS.bindKeyHold(['d', 'ArrowRight'], e => { player.vel.x = 200; })
-KEYS.bindKeyPressed(' ', (e) => {
+function Jump(amt = -400) {
   player.moveY(1);
-  if (player.touching(ground)) {
-    player.vel.y = -400;
+  if (rectCollide(player, ground)) {
+    player.vel.y = amt;
     player.moveY(-2);
   }
-});
+}
+KEYS.bindKeyPressed('i', e => inventory.toggle());
+KEYS.bindKeyHold(['a', 'ArrowLeft'], e => player.vel.x = -200)
+KEYS.bindKeyHold(['d', 'ArrowRight'], e => player.vel.x = 200)
+KEYS.bindKeyPressed(' ', e => Jump());
 const friction = 0.5;
 game.hook('gameloop', function(elapsed) {
+  console.log(player.y);
   game.camera.offsetX = -player.x;
   game.camera.offsetY = -player.y + game.bottom - 100;
   for (let p of Physics) {
     let f = friction;
-    if (p.touching(ground)) {
+    if (rectCollide(p, ground)) {
       f *= 2;
       if (p.vel.y > 0) p.vel.y = 0;
       if (p.bottom > ground.top + 1) 
-        p.bottom = ground.top + 1
-      
-    } else p.vel.y += 1 * elapsed
-    if (p.vel.x > 0) p.vel.x += -f * elapsed;
-    if (p.vel.x < 0) p.vel.x += f * elapsed;
-    if (p.vel.y > 0) p.vel.y += -f * elapsed;
-    if (p.vel.y < 0) p.vel.y += f * elapsed;
+        p.bottom = ground.top + 1;
+    } else p.vel.y += 1 * elapsed;
+    if (p.vel.x > 0) p.vel.x -= Math.min(f * elapsed, p.vel.x);
+    if (p.vel.x < 0) p.vel.x += Math.min(f * elapsed, -p.vel.x);
+    if (p.vel.y > 0) p.vel.y -= Math.min(f * elapsed, p.vel.y);
+    if (p.vel.y < 0) p.vel.y += Math.min(f * elapsed, -p.vel.y);
   }
 });
 game.start();

@@ -3,13 +3,21 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Kajam2022</title>
+  <title>Kajam222</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <script src="engine.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 
 <body>
+  <div class="touch" id="button-inventory">i</div>
+  <div id="touchbar">
+    <div class="touch" id="button-left">&lt;</div>
+    <div class="touch" id="button-shoot">*</div>
+    <div class="touch" id="button-right">&gt;</div>
+    <div class="touch" id="button-jump">^</div>
+
+  </div>
   <div id="inventory">
     <!--
     img - the image
@@ -100,14 +108,9 @@
     <div class="slot" id="slot-27"><img />
       <p></p><span></span>
     </div>
-    <div class="slot" id="slot-28"><img />
-      <p></p><span></span>
-    </div>
-    <div class="slot" id="slot-29"><img />
-      <p></p><span></span>
-    </div>
 
   </div>
+  <script src="touch.js"></script>
   <script src="hotsauce.js"></script>
   <script src="Scenes.js"></script>
   <script src="inventory.js"></script>

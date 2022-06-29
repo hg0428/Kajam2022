@@ -4,6 +4,7 @@ let inventory = {
   updateSlot(i) {
     let slot = this.slots[i];
     if (!slot.contains) {
+      slot.imageEl.style.transform = `translateY(-50%) scale(1)`;
       slot.textEl.innerText = '';
       slot.imageEl.src = '';
       slot.spicyEl.innerText = '';
@@ -11,6 +12,7 @@ let inventory = {
     else
       slot.textEl.innerText = slot.contains.name;
       slot.imageEl.src = slot.contains.img;
+      slot.imageEl.style.transform = `translateY(-50%) scale(${slot.contains.imgScale})`;
       slot.spicyEl.innerText = `${Math.round(slot.contains.spiciness)}`;
   },
   updateAll() {
@@ -66,6 +68,7 @@ let milk = new Ingredient(-5, 'Milk', 'milk.png');
 let p1 = new Pepper(3, 'Sweet');
 let ghost = new Pepper(8, 'Ghost');
 let hs = new Hotsauce(milk, ghost, ghost);
+let jalapeño = new Ingredient(5, 'jalapeño', 'jalapeño.png', 3)
 inventory.add(hs);
 inventory.add(milk);
 inventory.add(milk);
@@ -77,3 +80,4 @@ inventory.add(p1);inventory.add(milk);
 inventory.add(ghost);
 inventory.add(p1);
 inventory.add(hs);
+inventory.add(jalapeño);
