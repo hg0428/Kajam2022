@@ -1,3 +1,17 @@
+function Craft() {
+  inventory.select(2, (selections) => {
+  let l = [];
+  for (let slot of selections) {
+    l.push(slot.contains);
+    slot.contains = null;
+  }
+  console.log(l);
+  let hs = new Hotsauce(...l);
+  console.log(hs);
+  inventory.updateAll();
+  inventory.add(hs);
+});
+}
 let inventory = {
   element: document.getElementById('inventory'),
   slots: {},
@@ -10,6 +24,7 @@ let inventory = {
       slot.spicyEl.innerText = '';
     }
     else
+      console.log('Contains', slot.contains);
       slot.textEl.innerText = slot.contains.name;
       slot.imageEl.src = slot.contains.img;
       slot.imageEl.style.transform = `translateY(-50%) scale(${slot.contains.imgScale})`;
@@ -57,14 +72,17 @@ let inventory = {
     amt = amt || 5
     this.show();
     let selections = [];
-    for (let i of this.slots) {
+    for (let i in this.slots) {
       let slot = this.slots[i];
-      slot.element.onclick = () => {
-        selections.push(slot);
-        if (selections.length >= amt) {
-          complete(selections);
-          complete = () => null;
-          return;
+      if (slot.contains) {
+        slot.element.onclick = () => {
+          selections.push(slot);
+          if (selections.length >= amt) {
+            inventory.hide();
+            complete(selections);
+            complete = () => null;
+            return;
+          }
         }
       }
     }
@@ -77,14 +95,11 @@ for (let i = 0; i < 28; i++) {
     element: document.getElementById(`slot-${i}`),
     textEl: document.querySelector(`#slot-${i} span`),
     imageEl: document.querySelector(`#slot-${i} img`),
-    spicyEl: document.querySelector(`#slot-${i} p`)
+    spicyEl: document.querySelector(`#slot-${i} p`),
+    i,
   };
 }
 inventory.hide();
-inventory.select(2, (selections) => {
-  alert('done');
-  console.log(selections);
-});
 let sweet = new Pepper(1, 'Sweet');
 let jalapeno = new Ingredient(2.4, 'jalapeno', 'jalapeno.png', 3)
 let ghost = new Pepper(8, 'Ghost');
@@ -93,3 +108,5 @@ let creaper = new Pepper(11, 'Carolina Reaper');
 let Sugar = new Ingredient(-2, 'Sugar');
 let milk = new Ingredient(-5, 'Milk', 'milk.png');
 let LemonJuice = new Ingredient(-8, 'Lemon Juice')
+inventory.add(sweet);
+inventory.add(milk);

@@ -15,6 +15,7 @@ document.addEventListener('touchstart', ()=> {
     right.addEventListener('touchend', () => KEYS.pressed.delete('d'));
     jump.addEventListener('touchstart', () => Jump());
     inv.addEventListener('touchstart', e => inventory.toggle());
+    craft.addEventListener('touchstart', e => Craft());
 })
 document.addEventListener('pointerdown', event => {
     if (event.pointerType === "mouse") {

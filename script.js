@@ -64,6 +64,7 @@ KEYS.bindKeyPressed('i', e => inventory.toggle());
 KEYS.bindKeyHold(['a', 'ArrowLeft'], e => player.vel.x = -200)
 KEYS.bindKeyHold(['d', 'ArrowRight'], e => player.vel.x = 200)
 KEYS.bindKeyPressed(' ', e => Jump());
+KEYS.bindKeyPressed('c', Craft);
 const friction = 0.5;
 game.hook('gameloop', function(elapsed) {
   game.camera.offsetX = -player.x;
