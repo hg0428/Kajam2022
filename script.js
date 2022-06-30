@@ -66,7 +66,6 @@ KEYS.bindKeyHold(['d', 'ArrowRight'], e => player.vel.x = 200)
 KEYS.bindKeyPressed(' ', e => Jump());
 const friction = 0.5;
 game.hook('gameloop', function(elapsed) {
-  console.log(player.y);
   game.camera.offsetX = -player.x;
   game.camera.offsetY = -player.y + game.bottom - 100;
   for (let p of Physics) {

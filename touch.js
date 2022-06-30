@@ -8,6 +8,7 @@ document.addEventListener('touchstart', ()=> {
     let jump = document.getElementById('button-jump');
     let shoot = document.getElementById('button-shoot');
     let inv = document.getElementById('button-inventory');
+    let craft = document.getElementById('button-crafting');
     left.addEventListener('touchstart', () => KEYS.pressed.add('a'));
     left.addEventListener('touchend', () => KEYS.pressed.delete('a'));
     right.addEventListener('touchstart', () => KEYS.pressed.add('d'));

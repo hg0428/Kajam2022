@@ -48,11 +48,15 @@ class Hotsauce {
       return b[1] - a[1];
     });
     this.imgScale = 0.85;
-    this.name = list[0][0] + '-' + list[1][0] + ' Hotsauce';
+    this.name=''
+    for (let i=0; i<Math.min(list.length, 2);i++) {
+      this.name += list[i][0] + '-'
+    }
+    this.name = this.name.substring(0, this.name.length-1) + ' Hotsauce';
     this.spiciness /= ingredients.length;
     this.img = 'Hotsauces/mild.png'
     if (this.spiciness > 8) {
-      this.img = 'Hotsauces/firey.png';
+      this.img = 'Hotsauces/fiery.png';
       this.name = 'Fiery ' + this.name;
     }
     else if (this.spiciness >= 6) {

@@ -127,3 +127,8 @@ html, body {
   right:10px;
   z-index: 10;
 }
+#button-crafting {
+  position: fixed;
+  top:20px;
+  left:10px;
+}

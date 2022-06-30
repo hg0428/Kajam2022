@@ -44,7 +44,7 @@ let inventory = {
     }
   },
   remove(item) {
-    for (let i = 30; i > 0; i--) {
+    for (let i = this.slots.length; i > 0; i--) {
       //loop to remove it from the first slot it can find that contains it.
       let slot = this.slots[i];
       if (slot.contains == item)
@@ -52,9 +52,26 @@ let inventory = {
         this.updateSlot(i);
         break;
     }
+  },
+  select(amt, complete) {
+    amt = amt || 5
+    this.show();
+    let selections = [];
+    for (let i of this.slots) {
+      let slot = this.slots[i];
+      slot.element.onclick = () => {
+        selections.push(slot);
+        if (selections.length >= amt) {
+          complete(selections);
+          complete = () => null;
+          return;
+        }
+      }
+    }
+    //Let them select $amt different inventory items and return it.
   }
 }
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < 28; i++) {
   inventory.slots[i] = {
     contains: null,
     element: document.getElementById(`slot-${i}`),
@@ -64,20 +81,15 @@ for (let i = 0; i < 30; i++) {
   };
 }
 inventory.hide();
-let milk = new Ingredient(-5, 'Milk', 'milk.png');
-let p1 = new Pepper(3, 'Sweet');
+inventory.select(2, (selections) => {
+  alert('done');
+  console.log(selections);
+});
+let sweet = new Pepper(1, 'Sweet');
+let jalapeno = new Ingredient(2.4, 'jalapeno', 'jalapeno.png', 3)
 let ghost = new Pepper(8, 'Ghost');
-let hs = new Hotsauce(milk, ghost, ghost);
-let jalapeno = new Ingredient(5, 'jalapeno', 'jalapeno.png', 3)
-inventory.add(hs);
-inventory.add(milk);
-inventory.add(milk);
-inventory.add(ghost);
-inventory.add(p1);
-inventory.add(milk);
-inventory.add(ghost);
-inventory.add(p1);inventory.add(milk);
-inventory.add(ghost);
-inventory.add(p1);
-inventory.add(hs);
-inventory.add(jalapeno);
+let Moruga = new Pepper(10, 'Moruga Scorpion');
+let creaper = new Pepper(11, 'Carolina Reaper');
+let Sugar = new Ingredient(-2, 'Sugar');
+let milk = new Ingredient(-5, 'Milk', 'milk.png');
+let LemonJuice = new Ingredient(-8, 'Lemon Juice')
