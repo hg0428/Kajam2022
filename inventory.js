@@ -73,6 +73,7 @@ let inventory = {
     }
   },
   select(complete, max=100) {
+    this.updateAll();
     this.show();
     Done.style.display = 'block';
     let selections = new Set();

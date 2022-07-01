@@ -5,10 +5,9 @@ window.onscroll = function() {
   window.scrollTo(0, 0);
 };
 let farmScene = new Scene((x, y) => {
-  alert('farm');
   new game.Thing({
     background: 'yellow',
-    x,
+    x:x+500,
     y,
     width: 300,
     height: 300,
@@ -189,7 +188,7 @@ function restart() {
   player.setHealth(100);
 }
 restart();
-KEYS.bindKeyHold(['w', 'ArrowUp'], (e) => {
+KEYS.bindKeyPressed(['w', 'ArrowUp'], (e) => {
   if (actionBtn.style.display !== 'none') {
     actionBtn.click();
     actionBtn.style.display = 'none';

@@ -33,7 +33,7 @@ class Pepper extends Ingredient {
       height: 20,
       width: 5,
       x: plant.thing.x,
-      bottom: plant.thing.top,
+      bottom: plant.thing.top + 10,
     })
   }
   grow(elapsed) {
@@ -42,6 +42,7 @@ class Pepper extends Ingredient {
       this.iSeeds = this.growth === 0;
       this.thing.height+=elapsed/200;
       this.thing.width+=elapsed/400;
+      this.thing.bottom = this.plant.thing.top + 10 + this.growth*2;
     }
     if (this.planted && this.growth>=10) {
       this.plant.thing.custom.funcText = 'Harvest';

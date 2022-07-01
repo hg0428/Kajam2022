@@ -2,7 +2,7 @@ var Doors = [];
 let Scenes = []
 class Door {
   constructor(image, x, y, scene) {
-    let thisscene = this.scene = new Scene(scene);
+    let thisscene = this.scene = scene;
     this.thing = new game.Thing({
       background: image,
       width: 50,
@@ -25,20 +25,13 @@ class Door {
 }
 class Scene {
   constructor(scene, width = 2000) {
-    let works = true;
-    while (true) {
-      works = true;
-      this.x = Random.range(-1000, 1000);
-      this.y = Random.range(-1000, 1000);
-      for (let s of Scenes) {
-        if (game.numberDistance(s.x, this.x) < (width / 2 + s.width / 2) && game.numberDistance(s.y, this.y) < (800)) {
-          works = false;
-          break;
-        };
-      }
-      if (works) {
-        break;
-      }
+    let last = Scenes[Scenes.length - 1];
+    if (last) {
+      this.x = last.ground.right + game.width + width / 2;
+      this.y = last.ground.bottom + game.height + 200;
+    } else {
+      this.x = 0;
+      this.y = 0;
     }
     const self = this;
     this.scene = () => {
@@ -61,7 +54,7 @@ class Scene {
       top: this.y,
       width: width,
       height:200,
-    })
+    });
   }
 }
 var Physics = [];
