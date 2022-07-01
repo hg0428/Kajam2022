@@ -131,7 +131,7 @@ for (let i = 0; i < 28; i++) {
 }
 inventory.hide();
 let sweet = new Pepper(1, 'Sweet', 0);
-let jalapeno = new Ingredient(2.4, 'jalapeno', 'jalapeno.png', 3)
+let jalapeno = new Pepper(2.4, 'jalapeno', 0, 'jalapeno.png', 3)
 let ghost = new Pepper(8, 'Ghost');
 let Moruga = new Pepper(10, 'Moruga Scorpion');
 let creaper = new Pepper(11, 'Carolina Reaper');

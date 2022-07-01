@@ -5,6 +5,7 @@ window.onscroll = function() {
   window.scrollTo(0, 0);
 }
 game.loadSprite('enemyl', 'enemy-left.png');
+game.loadSprite('chest', 'chest.png');
 game.loadSprite('enemyr', 'enemy-right.png');
 game.loadSprite('pepper-plant', 'pepper-plant.png');
 const healthcontainer = document.getElementById('health-container');
@@ -46,6 +47,48 @@ class Enemy {
       delete this.thing;
     }
   }
+}
+function EnemyWall(x, bottom, height=200) {
+  let thing = new game.Thing({
+    x,
+    bottom,
+    height,
+    width:65,
+    background: 'rgba(0, 0, 0, 0.1)',
+    custom: {
+      physics:true,
+      pass: true,
+    }
+  });
+  thing.collided(Enemies, event =>{
+    switch (event.side) {
+      case 'left':
+        event.other.right = thing.left;
+      case 'right':
+        event.other.left = thing.right;
+    }
+  });
+  return thing;
+}
+function Chest(x, bottom, contents) {
+  let thing = new game.Thing({
+    x,
+    bottom,
+    width:70,
+    height:50,
+    background: Sprite('chest'),
+    custom: {
+      physics: true,
+      pass: true,
+      funcText: 'Open',
+      funct: () => {
+        for (let c of contents) {
+          inventory.add(c);
+          alert('Chest contents added to your inventory');
+        }
+      }
+    }
+  })
 }
 game.loadSprite('dirt', 'dirt.png');
 game.loadSprite('dirt-tilled', 'dirt-tilled.png');
@@ -103,29 +146,35 @@ class Dirt {
     }
   }
 }
+let level2 = new Scene((x, y, ground) => {
+
+}, 2000)
 let otherland = new Scene((x, y, ground) => {
   new Door('Home', Sprite('door'), x, ground.top - 35, mainScene);
-  new Enemy(200+x, ground.top, 50, 50);
+  new Enemy(600+x, ground.top, 50, 50);
   let thisthing = new game.Thing({
     x: 300+x, 
     bottom: ground.top+y,
     background: 'red',
-    width: 200,
-    height: 100,
+    width: 80,
+    height: 40,
     custom: {
       physics: true,
     }
   });
   new game.Thing({
-    x: 300+x, 
+    left: 300+x, 
     bottom: thisthing.top+y,
     background: 'blue',
-    width: 100,
-    height: 50,
+    width: 40,
+    height: 40,
     custom: {
       physics: true,
     }
   });
+  EnemyWall(x+500, ground.top);
+  Chest(x+700, ground.top, [jalapeno.copy()]);
+  new Door('Level 2', Sprite('door', x+650, ground.top - 35, level2))
 }, 2000);
 let mainScene = new Scene((x, y, ground) => {
   new game.Thing({
