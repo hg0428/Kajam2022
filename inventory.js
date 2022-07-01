@@ -14,6 +14,9 @@ function Craft() {
   });
 }
 const Done = document.getElementById('craft-done');
+const menu = document.getElementById('menu');
+const Equip = document.getElementById('Equip');
+const Drink = document.getElementById('Drink');
 let inventory = {
   element: document.getElementById('inventory'),
   slots: {},
@@ -27,11 +30,23 @@ let inventory = {
       slot.spicyEl.innerText = '';
     }
     else {
-      console.log('Contains', slot.contains);
       slot.textEl.innerText = slot.contains.name;
       slot.imageEl.src = slot.contains.img;
       slot.imageEl.style.transform = `translateY(-50%) scale(${slot.contains.imgScale})`;
       slot.spicyEl.innerText = `${Math.round(slot.contains.spiciness)}`;
+      if (slot.contains.isHotsauce) {
+        slot.element.onclick = () => {
+          menu.style.display = 'block';
+					Drink.onclick = () => {
+            player.drink(slot.contains);
+            inventory.hide();
+          };
+          Equip.onclick = () => {
+            player.weapon = slot.contains;
+            inventory.hide();
+          };
+        }
+      }
     }
   },
   updateAll() {
@@ -43,7 +58,9 @@ let inventory = {
     this.element.style.display = 'grid';
   },
   hide() {
+    menu.style.display = 'none';
     this.element.style.display = 'none';
+    Done.style.display = 'none';
   },
   toggle() {
     if (this.element.style.display == 'none')
@@ -75,6 +92,7 @@ let inventory = {
   select(complete, max=100) {
     this.updateAll();
     this.show();
+    const self = this;
     Done.style.display = 'block';
     let selections = new Set();
     for (let i in this.slots) {
@@ -97,6 +115,7 @@ let inventory = {
       complete(selections);
       complete = () => null;
       Done.style.display = 'none';
+      self.updateAll();
     }
   }
 }
@@ -119,5 +138,6 @@ let creaper = new Pepper(11, 'Carolina Reaper');
 let Sugar = new Ingredient(-2, 'Sugar');
 let milk = new Ingredient(-5, 'Milk', 'milk.png');
 let LemonJuice = new Ingredient(-8, 'Lemon Juice')
-inventory.add(sweet);
-inventory.add(milk);
+inventory.add(sweet.copy());
+inventory.add(milk.copy());
+inventory.add(sweet.copy());

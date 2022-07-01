@@ -6,16 +6,20 @@ class Ingredient {
     this.img = img || '';
     this.growth = 10;
   }
+  copy() {
+    return new Ingredient(this.spiciness, this.name, this.img, this.imgScale);
+  }
 }
 var Peppers = [];
 class Pepper extends Ingredient {
-  constructor(spiciness, name, growth = 10) {
+  constructor(spiciness, name, growth = 10, grownImg = 'pepper.png', imgScale = 1.25) {
     let add = ' pepper';
     if (growth === 0) add += ' seeds';
     super(spiciness, name + add);
     this.baseName = name;
-    this.imgScale = 1.25;
-    this.img = 'pepper.png';
+    this.imgScale = imgScale;
+    this.img = grownImg;
+    this.grownImg = grownImg;
     this.growth = growth; //out of 10
     this.iSeeds = growth === 0; //is seeds
     if (this.iSeeds)
@@ -24,6 +28,9 @@ class Pepper extends Ingredient {
     this.thing = null;
     this.plant = null;
     Peppers.push(this);
+  }
+  copy() {
+    return new Pepper(this.spiciness, this.baseName, this.growth, this.grownImg, this.imgScale);
   }
   Plant(plant) {
     this.plant = plant;
@@ -53,7 +60,7 @@ class Pepper extends Ingredient {
         self.plant.hasPlant = false;
         self.plant.isTilled();
         self.plant = null;
-        self.img = 'pepper.png';
+        self.img = this.grownImg;
         self.thing.delete();
         self.thing = null;
         self.name = self.name.substring(0, self.name.length - ' seeds'.length);
@@ -101,6 +108,7 @@ class Hotsauce {
       if (this.name.length + i[0].length > 15) break;
       this.name += i[0] + '-';
     }
+    this.isHotsauce = true;
     this.name = this.name.substring(0, this.name.length - 1) + ' Hotsauce';
     this.img = 'Hotsauces/mild.png';
     if (this.spiciness > 8) {
@@ -116,5 +124,16 @@ class Hotsauce {
     else if (this.spiciness <= -6) this.name = 'Mending ' + this.name;
     else if (this.spiciness <= -3) this.name = 'Refreshing ' + this.name;
     else if (this.spiciness < 3) this.name = 'Blunt ' + this.name;
+    this.ammo = 10
+  }
+  use(amt=1) {
+    this.ammo-=amt;
+    if (this.ammo<=0) {
+      if (player.weapon === this) {
+        player.weapon = null;
+        alert('Your equipped hotsauce bottle ran out');
+      }
+      inventory.remove(this);
+    }
   }
 }

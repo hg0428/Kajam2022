@@ -1,8 +1,10 @@
 var Doors = [];
-let Scenes = []
+let Scenes = [];
+let Grounds = [];
 class Door {
-  constructor(image, x, y, scene) {
-    let thisscene = this.scene = scene;
+  constructor(name, image, x, y, scene) {
+    this.scene = scene;
+    this.name = name;
     this.thing = new game.Thing({
       background: image,
       width: 50,
@@ -12,9 +14,9 @@ class Door {
       custom: {
         physics: true,
         pass: true,
-        funcText: 'Open',
+        funcText: `To ${name}`,
         funct: () => {
-          loadScene(player, thisscene);
+          loadScene(player, scene);
           reset();
           actionBtn.style.display = 'none';
         }
@@ -33,39 +35,39 @@ class Scene {
       this.x = 0;
       this.y = 0;
     }
-    const self = this;
-    this.scene = () => {
-      ground = self.ground;
-      player.x = ground.x;
-      player.bottom = ground.top;
-      game.camera.offsetX = -player.x;
-      game.camera.offsetY = -player.y + game.bottom - 100;
-      if (!self.init) {
-        scene(self.x, self.y);
-        self.init = true;
-      }
-    };
     Scenes.push(this);
     this.width = width;
-    this.init = false;
     this.ground = new game.Thing({
       background: 'green',
       x: this.x,
       top: this.y,
       width: width,
-      height:200,
+      height: 200,
     });
+    Grounds.push(this.ground);
+    const self = this;
+    this.loaded = false;
+    this.load = () => {
+      if (!self.loaded) {
+        scene(self.x, self.y, self.ground);
+        self.loaded = true;
+      }
+    }
+    this.scene = () => {
+      ground = self.ground;
+      self.load();
+      player.x = self.x;
+      player.bottom = self.ground.top;
+      game.camera.offsetX = -player.x;
+      game.camera.offsetY = -player.y + game.bottom - 100;
+    };
   }
 }
-var Physics = [];
 function loadScene(player, scene) {
-  //player.teleport(0, 0);
-  Physics = [player];
   scene.scene();
   for (let t of game.all.things) {
-    if (t.custom.physics) Physics.push(t);
+    if (t.custom.physics) Physics.add(t);
   }
-  ground.collisions = {};
   ground.collided(Physics, event => {
     event.other.bottom = ground.top;
     event.other.vel.y = 0;
