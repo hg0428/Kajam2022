@@ -132,3 +132,51 @@ html, body {
   top:20px;
   left:10px;
 }
+.green {
+  background: green;
+}
+#craft-done {
+  display: none;
+  background: green;
+  width: 100px;
+  height:100px;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 11;
+  color: blue;
+  font-size: 40px;
+  padding:5px;
+  border-radius: 5px;
+}
+#health-container {
+  position: fixed;
+  margin: 10px;
+  border: 1px solid black;
+  border-radius:10px;
+  /*background-size: ;*/
+  width: 200px;
+  height: 20px;
+  overflow: hidden;
+  z-index: 20;
+}
+#health-bar {
+  background-color: red;
+  width:100%;
+  height:100%;
+}
+#action-btn {
+  display: none;
+  border: 2px solid black;
+  background: rgba(0, 250, 50, 0.4);
+  height: 100px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  color: blue;
+  font-size: 45px;
+  padding: 10px;
+  border-radius: 10px;
+}

@@ -1,34 +1,38 @@
 function Craft() {
-  inventory.select(2, (selections) => {
-  let l = [];
-  for (let slot of selections) {
-    l.push(slot.contains);
-    slot.contains = null;
-  }
-  console.log(l);
-  let hs = new Hotsauce(...l);
-  console.log(hs);
-  inventory.updateAll();
-  inventory.add(hs);
-});
+  inventory.select((selections) => {
+    let l = [];
+    for (let slot of selections) {
+      if (slot.contains)
+        l.push(slot.contains);
+    }
+    let hs = new Hotsauce(...l);
+    if (hs.name) {
+      for (let slot of selections) slot.contains = null;
+      inventory.updateAll();
+      inventory.add(hs);
+    }
+  });
 }
+const Done = document.getElementById('craft-done');
 let inventory = {
   element: document.getElementById('inventory'),
   slots: {},
   updateSlot(i) {
     let slot = this.slots[i];
+    slot.element.classList.remove('green');
     if (!slot.contains) {
       slot.imageEl.style.transform = `translateY(-50%) scale(1)`;
       slot.textEl.innerText = '';
       slot.imageEl.src = '';
       slot.spicyEl.innerText = '';
     }
-    else
+    else {
       console.log('Contains', slot.contains);
       slot.textEl.innerText = slot.contains.name;
       slot.imageEl.src = slot.contains.img;
       slot.imageEl.style.transform = `translateY(-50%) scale(${slot.contains.imgScale})`;
       slot.spicyEl.innerText = `${Math.round(slot.contains.spiciness)}`;
+    }
   },
   updateAll() {
     for (let i in this.slots) {
@@ -52,10 +56,10 @@ let inventory = {
       //loop to add it to the first availiable slot
       let slot = this.slots[i];
       if (slot.contains) continue;
-      else 
+      else
         slot.contains = item;
-        this.updateSlot(i);
-        break;
+      this.updateSlot(i);
+      break;
     }
   },
   remove(item) {
@@ -64,29 +68,35 @@ let inventory = {
       let slot = this.slots[i];
       if (slot.contains == item)
         slot.contains = null;
-        this.updateSlot(i);
-        break;
+      this.updateSlot(i);
+      break;
     }
   },
-  select(amt, complete) {
-    amt = amt || 5
+  select(complete, max=100) {
     this.show();
-    let selections = [];
+    Done.style.display = 'block';
+    let selections = new Set();
     for (let i in this.slots) {
       let slot = this.slots[i];
       if (slot.contains) {
         slot.element.onclick = () => {
-          selections.push(slot);
-          if (selections.length >= amt) {
-            inventory.hide();
-            complete(selections);
-            complete = () => null;
-            return;
+          if (selections.has(slot)) {
+            selections.delete(slot);
+            slot.element.classList.remove('green');
+          } else if (selections.size<max) {
+            selections.add(slot);
+            slot.element.classList.add('green');
           }
         }
       }
     }
-    //Let them select $amt different inventory items and return it.
+    Done.onclick = () => {
+      Done.onclick = null;
+      inventory.hide();
+      complete(selections);
+      complete = () => null;
+      Done.style.display = 'none';
+    }
   }
 }
 for (let i = 0; i < 28; i++) {
@@ -100,7 +110,7 @@ for (let i = 0; i < 28; i++) {
   };
 }
 inventory.hide();
-let sweet = new Pepper(1, 'Sweet');
+let sweet = new Pepper(1, 'Sweet', 0);
 let jalapeno = new Ingredient(2.4, 'jalapeno', 'jalapeno.png', 3)
 let ghost = new Pepper(8, 'Ghost');
 let Moruga = new Pepper(10, 'Moruga Scorpion');

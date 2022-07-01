@@ -3,13 +3,19 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Kajam222</title>
+  <title>Spicy</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="translucent">
+  <meta name="apple-mobile-web-app-title" content="Spicy">
+  <meta name="description" content="Shoot hotsauce at your enemies, farm peppers, craft spicier hotsauces, and complete hard puzzels in this dazzeling game."/>
   <script src="engine.min.js"></script>
+  <meta name="theme-color" content="#ffffff"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 
 <body>
+  <div id="health-container"><div id="health-bar"></div></div>
   <div class="touch" id="button-inventory">i</div>
   <div class="touch" id="button-crafting">c</div>
   <div id="touchbar">
@@ -19,6 +25,8 @@
     <div class="touch" id="button-jump">^</div>
 
   </div>
+  <button id="action-btn"></button>
+  <button id="craft-done">Done</button>
   <div id="inventory">
     <!--
     img - the image

@@ -14,7 +14,7 @@ document.addEventListener('touchstart', ()=> {
     right.addEventListener('touchstart', () => KEYS.pressed.add('d'));
     right.addEventListener('touchend', () => KEYS.pressed.delete('d'));
     jump.addEventListener('touchstart', () => Jump());
-    inv.addEventListener('touchstart', e => inventory.toggle());
+    inv.addEventListener('click', e => inventory.toggle());
     craft.addEventListener('touchstart', e => Craft());
 })
 document.addEventListener('pointerdown', event => {
