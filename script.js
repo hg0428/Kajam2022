@@ -1,4 +1,4 @@
- 'use strict';
+'use strict';
 let goaway = document.getElementById('goaway');
 let goaway2 = document.getElementById('goaway2');
 goaway.onclick = () => {
@@ -370,8 +370,8 @@ player.setHealth = (val) => {
 player.weapon = null;
 player.drink = function(what) {
   player.setHealth(player.health - what.spiciness * 5);
-  what.use(10);
-}
+  what.use(20);
+};
 function reset() {
   player.collisions = {};
   player.collided(Enemies, event => {
