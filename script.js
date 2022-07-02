@@ -92,13 +92,28 @@ function Chest(x, bottom, contents) {
       funct: () => {
         for (let c of contents) {
           inventory.add(c);
-          thing.delete();
         }
+        thing.delete();
       }
     }
   })
 }
+function Message(x, bottom, message) {
+  new game.Thing({
+    x,
+    width:5,
+    height:5,
+    background:'transparent',
+    custom: {
+      physics: true,
+      pass: true,
+      funcText: message,
+      funct: () => {
 
+      }
+    }
+  });
+}
 game.loadSprite('dirt', 'dirt.png');
 game.loadSprite('door-back', 'door-back.png');
 game.loadSprite('dirt-tilled', 'dirt-tilled.png');
@@ -156,28 +171,28 @@ class Dirt {
     }
   }
 }
-let level4 = new Scene((x, y, ground) => {
-  new Enemy(x - 1300, ground.top, 50, 50, 120);
-  new Enemy(x - 1300, ground.top, 40, 40, 100);
-}, 2000, -1950);
-let level3 = new Scene((x, y, ground) => {
-  new Door('Home', Sprite('door-back'), x - 2200, ground.top - 35, mainScene);
-  Chest(x - 2350, ground.top, [Aji.copy(10), Aji.copy(0)]);
-  new Enemy(x - 1900, ground.top, 100, 100, 300);
-  new Enemy(x - 1800, ground.top, 85, 85, 230);
-  new Enemy(x - 1300, ground.top, 50, 50, 120);
-  new Enemy(x - 1300, ground.top, 40, 40, 100);
-  new EnemyWall(x - 2100, ground.top);
-  Chest(x - 100, ground.top, [ghost.copy(10)]);
-  new Door('Level 4', Sprite('door'), x - 2200, ground.top - 35, level4);
-}, 5000, -2450);
-let level2 = new Scene((x, y, ground) => {
-  new Door('Home', Sprite('door-back'), x - 900, ground.top - 35, mainScene);
-  new Enemy(x - 300, ground.top, 80, 80, 200);
-  EnemyWall(x - 500, ground.top);
+function cow(x, bottom) {
+  new game.Thing({
+    background: Sprite('cow'),
+    width: 200,
+    height: 135,
+    x,
+    bottom,
+    custom: {
+      physics: true,
+      pass: true,
+      funcText: 'Milk',
+      funct: function() {
+        inventory.add(milk.copy());
+        this.funct = null;
+      }
+    }
+  });
+}
+function sugarcane(x, bottom) {
   let tx0 = new game.Thing({
-    x: x + 50,
-    bottom: ground.top,
+    x,
+    bottom,
     background: Sprite('sugar-cane'),
     width: 200,
     height: 120,
@@ -191,6 +206,59 @@ let level2 = new Scene((x, y, ground) => {
       }
     }
   })
+}
+let level6 = new Scene((x, y, ground) => {
+  new Door('Paradise', Sprite('door-back'), x, ground.top - 35, paradise);
+  new Enemy(x-1000, ground.top, 100, 100, 200);
+  new Enemy(x+1000, ground.top, 100, 100, 200);
+  new Enemy(x-800, ground.top, 20, 20, 75);
+  new Enemy(x+800, ground.top, 20, 20, 75);
+  new Enemy(x-600, ground.top, 20, 20, 75);
+  new Enemy(x+600, ground.top, 20, 20, 75);
+  new Enemy(x-400, ground.top, 200, 200, 250);
+  new Enemy(x+400, ground.top, 200, 200, 250);
+}, 2000);
+let level5 = new Scene((x, y, ground) => {
+  new Door('Paradise', Sprite('door-back'), x, ground.top - 35, paradise);
+  new Enemy(x-400, ground.top, 100, 100, 200);
+  new Enemy(x+400, ground.top, 100, 100, 200);
+  new Chest(x+425, ground.top, [Aji.copy(0), ghost.copy(10)]);
+  new Door('Level 6', Sprite('door'), x+475, ground.top - 35, level6)
+}, 1000)
+let paradise = new Scene((x, y, ground) => {
+  cow(x-300, ground.top);
+  sugarcane(x-700, ground.top);
+  sugarcane(x+300, ground.top);
+  cow(x+700, ground.top);
+  new Dirt(x+900, ground.top+50);
+  new Dirt(x-900, ground.top+50);
+  new Door('Level 5', Sprite('door'), x+80, ground.top - 35, level5);
+  new Door('Home', Sprite('door-back'), x-80, ground.top - 35, mainScene);
+}, 3000, 0);
+let level4 = new Scene((x, y, ground) => {
+  new Message(x - 950, ground.bottom, 'The door home is at the end');
+  new Enemy(x - 200, ground.top, 50, 50, 120);
+  new Enemy(x - 220, ground.top, 40, 40, 100);
+  new Enemy(x - 240, ground.top, 200, 200, 1000);
+  Chest(x + 200, ground.top, [Aji.copy(0)]);
+  new Door('Paradise', Sprite('door'), x + 100, ground.top - 35, paradise);
+  new Door('Home', Sprite('door-back'), x, ground.top - 35, mainScene);
+}, 2000, -950);
+let level3 = new Scene((x, y, ground) => {
+  new Door('Home', Sprite('door-back'), x - 2200, ground.top - 35, mainScene);
+  Chest(x - 2350, ground.top, [Aji.copy(10)]);
+  new Enemy(x - 1900, ground.top, 100, 100, 300);
+  new Enemy(x - 1800, ground.top, 85, 85, 230);
+  new Enemy(x - 1300, ground.top, 50, 50, 120);
+  new Enemy(x - 1300, ground.top, 40, 40, 100);
+  new EnemyWall(x - 2100, ground.top);
+  new Door('Level 4', Sprite('door'), x - 800, ground.top - 35, level4);
+}, 5000, -2450);
+let level2 = new Scene((x, y, ground) => {
+  new Door('Home', Sprite('door-back'), x - 900, ground.top - 35, mainScene);
+  new Enemy(x - 300, ground.top, 80, 80, 200);
+  EnemyWall(x - 500, ground.top);
+  sugarcane(x+50, ground.top);
   new Door('Level 3', Sprite('door'), x + 250, ground.top - 35, level3);
 }, 2000, -800)
 let otherland = new Scene((x, y, ground) => {
@@ -201,22 +269,7 @@ let otherland = new Scene((x, y, ground) => {
   new Door('Level 2', Sprite('door'), x + 600, ground.top - 35, level2);
 }, 2000);
 let mainScene = new Scene((x, y, ground) => {
-  new game.Thing({
-    background: Sprite('cow'),
-    width: 200,
-    height: 135,
-    x: x - 200,
-    bottom: y,
-    custom: {
-      physics: true,
-      pass: true,
-      funcText: 'Milk',
-      funct: function() {
-        inventory.add(milk.copy());
-        this.funct = null;
-      }
-    }
-  });
+  cow(x - 200, ground.top);
   new game.Thing({
     background: 'yellow',
     x: x + 500,
