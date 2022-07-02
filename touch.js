@@ -27,3 +27,9 @@ document.addEventListener('pointerdown', event => {
     }
   }
 })
+function windowResize() {
+  game.width = game.canvas.width  = document.body.offsetWidth;
+  game.height = game.canvas.height = document.body.offsetHeight;
+};
+
+window.addEventListener('resize', windowResize);

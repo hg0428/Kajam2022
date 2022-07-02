@@ -38,6 +38,7 @@ const Done = document.getElementById('craft-done');
 const menu = document.getElementById('menu');
 const Equip = document.getElementById('Equip');
 const Drink = document.getElementById('Drink');
+const Discard = document.getElementById('Discard');
 let inventory = {
   element: document.getElementById('inventory'),
   slots: {},
@@ -55,21 +56,26 @@ let inventory = {
       slot.imageEl.src = slot.contains.img;
       slot.imageEl.style.transform = `translateY(-50%) scale(${slot.contains.imgScale})`;
       slot.spicyEl.innerText = `${Math.round(slot.contains.spiciness)}`;
-      if (slot.contains.isHotsauce) {
-        slot.element.onclick = () => {
-          menu.style.display = 'block';
-          Drink.onclick = () => {
-            if (!slot.contains.isHotsauce) return alert('You can only drink Hotsauces. Press c to craft a Hotsauce');
-            player.drink(slot.contains);
-            inventory.hide();
-          };
-          Equip.onclick = () => {
-            if (!slot.contains.isHotsauce) return alert('You can only equip Hotsauces');
-            player.weapon = slot.contains;
-            player.weapon.ammo = 10;
-            inventory.hide();
-          };
-        }
+      slot.element.onclick = () => {
+        let rect = slot.element.getBoundingClientRect();
+        menu.style.display = 'block';
+        menu.style.left = `${rect.right+10}px`;
+        menu.style.top = `${rect.bottom+10}px`;
+        Drink.onclick = () => {
+          if (!slot.contains.isHotsauce) return alert('You can only drink Hotsauces. Press c to craft a Hotsauce');
+          player.drink(slot.contains);
+          inventory.hide();
+        };
+        Equip.onclick = () => {
+          if (!slot.contains.isHotsauce) return alert('You can only equip Hotsauces');
+          player.weapon = slot.contains;
+          player.weapon.ammo = 10;
+          inventory.hide();
+        };
+        Discard.onclick = () => {
+          slot.contains = null;
+          this.updateAll();
+        };
       }
     }
   },

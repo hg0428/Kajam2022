@@ -7,6 +7,13 @@ html, body {
   -webkit-user-select: none;
   user-select: none;
 }
+canvas {
+  width:100%;
+  height:100%;
+  position: fixed;
+  top:0;
+  left:0;
+}
 * {
   touch-action: none;
 }
@@ -71,28 +78,6 @@ html, body {
   font-size: 35px;
   font-weight: 800px;
 }
-@media screen and (max-width: 640px) {
-  #inventory {
-    gap: 10px;
-  }
-}
-@media screen and (max-width: 400px) {
-  #inventory {
-    width: 125%;
-    height: 125%;
-    transform: translate(-50%, -50%) scale(0.8);
-    grid-template-columns: repeat(4, auto);
-    gap: 1px;
-  }
-}
-@media screen and (max-width: 300px) {
-  #inventory {
-    width: 142.8%;
-    height: 142.8%;
-    transform: translate(-50%, -50%) scale(0.7);
-    gap: 0px;
-  }
-}
 #touchbar {
   display: block;
   position: fixed;
@@ -129,7 +114,7 @@ html, body {
   position: fixed;
   top:20px;
   right:10px;
-  z-index: 10;
+  z-index: 12;
 }
 #button-crafting {
   position: fixed;
@@ -141,11 +126,11 @@ html, body {
 }
 #craft-done {
   display: none;
-  background: green;
+  background: rgba(56, 180, 85, 0.7);
   width: 100px;
-  height:100px;
+  height: 75px;
   position: fixed;
-  top: 15px;
+  bottom: 15px;
   right: 15px;
   z-index: 11;
   color: blue;
@@ -187,8 +172,8 @@ html, body {
 }
 #menu {
   width: 200px;
-  height: 75px;
-  background-color: rgba(30, 30, 30, 0.8);
+  height: auto;
+  background-color: rgba(30, 30, 30, 0.6);
   position: fixed;
   display: none;
   z-index: 100;
@@ -219,6 +204,7 @@ html, body {
   line-height: 15px;
 }
 #instructions div {
+  word-break:break-all;
 display: inline-block;
 }
 #goaway {
@@ -228,4 +214,44 @@ display: inline-block;
   background-color: rgb(50, 50, 50);
   color: white;
   padding: 10px;
+}
+@media screen and (max-width: 640px) {
+  #inventory {
+    gap: 10px;
+  }
+  .touch {
+    width: 50px;
+    height: 50px;
+    font-size: 50px;
+  }
+  #touchbar {
+    left:25px;
+    bottom:25px;
+  }
+  #button-jump {
+    right:25px;
+  }
+  #menu {
+    width:140px;
+  }
+  #menu div {
+    font-size: 22px;
+  }
+}
+@media screen and (max-width: 400px) {
+  #inventory {
+    width: 125%;
+    height: 125%;
+    transform: translate(-50%, -50%) scale(0.8);
+    grid-template-columns: repeat(4, auto);
+    gap: 1px;
+  }
+}
+@media screen and (max-width: 300px) {
+  #inventory {
+    width: 142.8%;
+    height: 142.8%;
+    transform: translate(-50%, -50%) scale(0.7);
+    gap: 0px;
+  }
 }

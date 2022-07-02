@@ -15,7 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 
-<body>
+<body onresize="windowResize()">
   <div id="instructions">
     <div>
       <h1>Controls</h1>
@@ -27,11 +27,16 @@
       <h2>Space — Jump</h2>
       <h2>c — Hotsauce Crafting</h2>
     </div><br />
+    <div>
+    <h1>Hotsauce Crafting</h1>
+    <h3>Press C to start crafting. Select all the items you would like to combine. <br/>Tap them again to deselect them. Press Done. The selected items have now been turned into a hotsauce.</h3>
+    </div><br/>
     <button id="goaway">OK</button>
   </div>
   <div id="menu">
     <div id="Equip">Equip</div>
     <div id="Drink">Drink</div>
+    <div id="Discard">Discard</div>
   </div>
   <div id="health-container">
     <div id="health-bar"></div>
