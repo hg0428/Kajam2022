@@ -38,10 +38,10 @@ class Enemy {
       } else if (thing.vel.x < 0) {
         thing.colorScheme = { draw: Sprite('enemyl') };
       }
-      if (game.numberDistance(player.x, thing.x)<game.width*2 && game.numberDistance(player.y, thing.y)<game.height*2)
+      if (game.numberDistance(player.x, thing.x) < game.width * 2 && game.numberDistance(player.y, thing.y) < game.height * 2)
         thing.to(player.x, 0, 100, 0);
-      else 
-        thing.vel.x=0;
+      else
+        thing.vel.x = 0;
     });
     Enemies.push(thing);
   }
@@ -56,19 +56,19 @@ class Enemy {
     }
   }
 }
-function EnemyWall(x, bottom, height=200) {
+function EnemyWall(x, bottom, height = 200) {
   let thing = new game.Thing({
     x,
     bottom,
     height,
-    width:65,
+    width: 65,
     background: 'rgba(0, 0, 0, 0.1)',
     custom: {
-      physics:true,
+      physics: true,
       pass: true,
     }
   });
-  thing.collided(Enemies, event =>{
+  thing.collided(Enemies, event => {
     switch (event.side) {
       case 'left':
         event.other.right = thing.left;
@@ -82,8 +82,8 @@ function Chest(x, bottom, contents) {
   let thing = new game.Thing({
     x,
     bottom,
-    width:70,
-    height:50,
+    width: 70,
+    height: 50,
     background: Sprite('chest'),
     custom: {
       physics: true,
@@ -92,13 +92,13 @@ function Chest(x, bottom, contents) {
       funct: () => {
         for (let c of contents) {
           inventory.add(c);
-          alert('Chest contents added to your inventory');
           thing.delete();
         }
       }
     }
   })
 }
+
 game.loadSprite('dirt', 'dirt.png');
 game.loadSprite('door-back', 'door-back.png');
 game.loadSprite('dirt-tilled', 'dirt-tilled.png');
@@ -156,23 +156,27 @@ class Dirt {
     }
   }
 }
+let level4 = new Scene((x, y, ground) => {
+  new Enemy(x - 1300, ground.top, 50, 50, 120);
+  new Enemy(x - 1300, ground.top, 40, 40, 100);
+}, 2000, -1950);
 let level3 = new Scene((x, y, ground) => {
-  new Door('Home', Sprite('door-back'), x-900, ground.top - 35, mainScene);
-  Chest(x-2350, ground.top, [Aji.copy(10), Aji.copy(0)]);
-  new Enemy(x-2100, ground.top, 100, 100, 300);
-  new Enemy(x-1800, ground.top, 85, 85, 230);
-  new Enemy(x-1300, ground.top, 50, 50, 120);
-  new Enemy(x-1300, ground.top, 40, 40, 100);
-  new EnemyWall(x-2300, ground.top);
-  Chest(x-100);
-
+  new Door('Home', Sprite('door-back'), x - 2200, ground.top - 35, mainScene);
+  Chest(x - 2350, ground.top, [Aji.copy(10), Aji.copy(0)]);
+  new Enemy(x - 1900, ground.top, 100, 100, 300);
+  new Enemy(x - 1800, ground.top, 85, 85, 230);
+  new Enemy(x - 1300, ground.top, 50, 50, 120);
+  new Enemy(x - 1300, ground.top, 40, 40, 100);
+  new EnemyWall(x - 2100, ground.top);
+  Chest(x - 100, ground.top, [ghost.copy(10)]);
+  new Door('Level 4', Sprite('door'), x - 2200, ground.top - 35, level4);
 }, 5000, -2450);
 let level2 = new Scene((x, y, ground) => {
-  new Door('Home', Sprite('door-back'), x-900, ground.top - 35, mainScene);
-  new Enemy(x-300, ground.top, 80, 80, 200);
-  EnemyWall(x-500, ground.top);
+  new Door('Home', Sprite('door-back'), x - 900, ground.top - 35, mainScene);
+  new Enemy(x - 300, ground.top, 80, 80, 200);
+  EnemyWall(x - 500, ground.top);
   let tx0 = new game.Thing({
-    x: x+50,
+    x: x + 50,
     bottom: ground.top,
     background: Sprite('sugar-cane'),
     width: 200,
@@ -187,14 +191,14 @@ let level2 = new Scene((x, y, ground) => {
       }
     }
   })
-  new Door('Level 3', Sprite('door'), x + 250, ground.top-35, level3);
+  new Door('Level 3', Sprite('door'), x + 250, ground.top - 35, level3);
 }, 2000, -800)
 let otherland = new Scene((x, y, ground) => {
   new Door('Home', Sprite('door-back'), x, ground.top - 35, mainScene);
-  new Enemy(600+x, ground.top, 50, 50);
-  EnemyWall(x+200, ground.top);
-  Chest(x+700, ground.top, [jalapeno.copy()]);
-  new Door('Level 2', Sprite('door'), x+600, ground.top - 35, level2);
+  new Enemy(600 + x, ground.top, 50, 50);
+  EnemyWall(x + 200, ground.top);
+  Chest(x + 700, ground.top, [jalapeno.copy()]);
+  new Door('Level 2', Sprite('door'), x + 600, ground.top - 35, level2);
 }, 2000);
 let mainScene = new Scene((x, y, ground) => {
   new game.Thing({
@@ -227,7 +231,7 @@ let mainScene = new Scene((x, y, ground) => {
   new Dirt(-625 + x, y);
   new Dirt(-750 + x, y);
   new Door('Another Land', Sprite('door'), 200 + x, ground.top - 35, otherland);
-  Chest(x+50, ground.top, [sweet.copy()]);
+  Chest(x + 50, ground.top, [sweet.copy()]);
 }, 2000);
 var player = new game.Thing({
   name: 'player',
@@ -374,7 +378,7 @@ function Shoot() {
       hs.vel.x = 500;
     }
   } else {
-    alert('No hotsauce equipped')
+    //alert('No hotsauce equipped');
   }
 }
 // game.canvas.addEventListener("mousedown", event => {
@@ -382,7 +386,7 @@ function Shoot() {
 //     Shoot();
 // })
 
-KEYS.bindKeyPressed('s', e => {Shoot();});
+KEYS.bindKeyPressed('s', e => { Shoot(); });
 KEYS.bindKeyPressed(' ', e => { Jump(); });
 KEYS.bindKeyPressed('c', Craft);
 const friction = 0.5;
@@ -435,6 +439,8 @@ game.hook('gameloop', function(elapsed) {
 });
 game.start();
 setInterval(() => {
+  document.zoom = 1;
+  window.zoom = 1;
   document.body.style.zoom = 1;
   document.body.style.webkitTransform = 'scale(1)';
   document.body.style.msTransform = 'scale(1)';

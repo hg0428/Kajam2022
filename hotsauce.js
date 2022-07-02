@@ -14,22 +14,22 @@ class Ingredient {
 var Peppers = [];
 class Pepper extends Ingredient {
   constructor(spiciness, name = "", growth = 10, grownImg = 'pepper.png', imgScale = 1.25, opts = {}) {
-      let add = ' pepper';
-      if (growth === 0) add += ' seeds';
-      super(spiciness || 0, name + add);
-      this.baseName = name;
-      this.imgScale = imgScale;
-      this.img = grownImg;
-      this.grownImg = grownImg;
-      this.growth = growth; //out of 10
-      this.iSeeds = growth === 0; //is seeds
-      if (this.iSeeds)
-        this.img = 'pepper-seeds.png';
-      this.planted = false;
-      this.thing = null;
-      this.plant = null;
-      this.isPepper = true;
-      Peppers.push(this);
+    let add = ' pepper';
+    if (growth === 0) add += ' seeds';
+    super(spiciness || 0, name + add);
+    this.baseName = name;
+    this.imgScale = imgScale;
+    this.img = grownImg;
+    this.grownImg = grownImg;
+    this.growth = growth; //out of 10
+    this.iSeeds = growth === 0; //is seeds
+    if (this.iSeeds)
+      this.img = 'pepper-seeds.png';
+    this.planted = false;
+    this.thing = null;
+    this.plant = null;
+    this.isPepper = true;
+    Peppers.push(this);
   }
   copy(growth) {
     return new Pepper(this.spiciness, this.baseName, growth || this.growth, this.grownImg, this.imgScale);
@@ -46,14 +46,14 @@ class Pepper extends Ingredient {
     })
   }
   grow(elapsed) {
-    if (this.planted && this.growth<10) {
+    if (this.planted && this.growth < 10) {
       this.growth += elapsed / 2000;
       this.iSeeds = this.growth === 0;
-      this.thing.height+=elapsed/200;
-      this.thing.width+=elapsed/400;
-      this.thing.bottom = this.plant.thing.top + 10 + this.growth*2;
+      this.thing.height += elapsed / 200;
+      this.thing.width += elapsed / 400;
+      this.thing.bottom = this.plant.thing.top + 10 + this.growth * 2;
     }
-    if (this.planted && this.growth>=10) {
+    if (this.planted && this.growth >= 10) {
       this.plant.thing.custom.funcText = 'Harvest';
       const self = this;
       this.plant.thing.custom.funct = () => {
@@ -128,9 +128,9 @@ class Hotsauce {
     else if (this.spiciness < 3) this.name = 'Blunt ' + this.name;
     this.ammo = 10
   }
-  use(amt=1) {
-    this.ammo-=amt;
-    if (this.ammo<=0) {
+  use(amt = 1) {
+    this.ammo -= amt;
+    if (this.ammo <= 0) {
       if (player.weapon === this) {
         player.weapon = null;
         alert('Your equipped hotsauce bottle ran out');

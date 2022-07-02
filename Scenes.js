@@ -58,8 +58,8 @@ class Scene {
     this.scene = () => {
       ground = self.ground;
       self.load();
-      player.x = self.x+self.spawnX;
-      player.bottom = self.ground.top+self.spawnY;
+      player.x = self.x + self.spawnX;
+      player.bottom = self.ground.top + self.spawnY;
       game.camera.offsetX = -player.x;
       game.camera.offsetY = -player.y + game.bottom - 100;
     };

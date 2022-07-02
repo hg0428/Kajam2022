@@ -19,7 +19,7 @@ try {
   savedInventory = JSON.parse(localStorage.getItem('inventory') || '{contents:[]}');
 }
 catch {
-  savedInventory = {contents:[]};
+  savedInventory = { contents: [] };
 }
 function saveInventory() {
   let contents = [];
@@ -27,12 +27,12 @@ function saveInventory() {
     let val = inventory.slots[i].contains;
     if (!val) continue;
     let type = '';
-    if (val.isPepper) type="Pepper";
-    else if (val.isIngredient) type="Ingredient";
-    else if (val.isHotsauce) type="Hotsauce";
-    contents.push({type, val});
+    if (val.isPepper) type = "Pepper";
+    else if (val.isIngredient) type = "Ingredient";
+    else if (val.isHotsauce) type = "Hotsauce";
+    contents.push({ type, val });
   }
-  localStorage.setItem('inventory', JSON.stringify({contents}))
+  localStorage.setItem('inventory', JSON.stringify({ contents }))
 };
 const Done = document.getElementById('craft-done');
 const menu = document.getElementById('menu');
@@ -58,7 +58,7 @@ let inventory = {
       if (slot.contains.isHotsauce) {
         slot.element.onclick = () => {
           menu.style.display = 'block';
-					Drink.onclick = () => {
+          Drink.onclick = () => {
             if (!slot.contains.isHotsauce) return alert('You can only drink Hotsauces. Press c to craft a Hotsauce');
             player.drink(slot.contains);
             inventory.hide();
@@ -116,7 +116,7 @@ let inventory = {
     }
     return false;
   },
-  select(complete, max=100) {
+  select(complete, max = 100) {
     this.updateAll();
     this.show();
     const self = this;
@@ -129,7 +129,7 @@ let inventory = {
           if (selections.has(slot)) {
             selections.delete(slot);
             slot.element.classList.remove('green');
-          } else if (selections.size<max) {
+          } else if (selections.size < max) {
             selections.add(slot);
             slot.element.classList.add('green');
           }
