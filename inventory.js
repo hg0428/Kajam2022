@@ -87,6 +87,7 @@ let inventory = {
   },
   show() {
     this.element.style.display = 'grid';
+    this.updateAll();
   },
   hide() {
     menu.style.display = 'none';

@@ -130,7 +130,7 @@ class Hotsauce {
   }
   use(amt = 1) {
     this.ammo -= amt;
-    if (this.ammo <= 0) {
+    if (this.ammo < 0) {
       if (player.weapon === this) {
         player.weapon = null;
         alert('Your equipped hotsauce bottle ran out');

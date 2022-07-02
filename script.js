@@ -397,8 +397,11 @@ let playerDir = "right";
 KEYS.bindKeyPressed('i', e => inventory.toggle());
 KEYS.bindKeyHold(['a', 'ArrowLeft'], e => { player.vel.x = -200; playerDir = "left"; });
 KEYS.bindKeyHold(['d', 'ArrowRight'], e => { player.vel.x = 200; playerDir = "right"; })
+let lastShot = 0;
 function Shoot() {
-  if (player.weapon) {
+  console.log('SHOOT');
+  if (player.weapon && Date.now()-lastShot>10) {
+    lastShot = Date.now();
     player.weapon.use();
     let hs = new game.Thing({
       width: 12,
