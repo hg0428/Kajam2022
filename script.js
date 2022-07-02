@@ -1,4 +1,8 @@
 'use strict';
+let goaway = document.getElementById('goaway');
+goaway.onclick = () => {
+  document.getElementById('instructions').style.display = 'none';
+}
 var ground = null;
 const game = new Game();
 window.onscroll = function() {
@@ -6,6 +10,7 @@ window.onscroll = function() {
 }
 game.loadSprite('enemyl', 'enemy-left.png');
 game.loadSprite('chest', 'chest.png');
+game.loadSprite('sugar-cane', 'sugar-cane.png');
 game.loadSprite('enemyr', 'enemy-right.png');
 game.loadSprite('pepper-plant', 'pepper-plant.png');
 const healthcontainer = document.getElementById('health-container');
@@ -33,7 +38,10 @@ class Enemy {
       } else if (thing.vel.x < 0) {
         thing.colorScheme = { draw: Sprite('enemyl') };
       }
-      this.thing.to(player.x, 0, 100, 0);
+      if (game.numberDistance(player.x, thing.x)<game.width*2 && game.numberDistance(player.y, thing.y)<game.height*2)
+        thing.to(player.x, 0, 100, 0);
+      else 
+        thing.vel.x=0;
     });
     Enemies.push(thing);
   }
@@ -85,12 +93,14 @@ function Chest(x, bottom, contents) {
         for (let c of contents) {
           inventory.add(c);
           alert('Chest contents added to your inventory');
+          thing.delete();
         }
       }
     }
   })
 }
 game.loadSprite('dirt', 'dirt.png');
+game.loadSprite('door-back', 'door-back.png');
 game.loadSprite('dirt-tilled', 'dirt-tilled.png');
 game.loadSprite('pepper', 'pepper.png');
 class Dirt {
@@ -146,35 +156,45 @@ class Dirt {
     }
   }
 }
-let level2 = new Scene((x, y, ground) => {
+let level3 = new Scene((x, y, ground) => {
+  new Door('Home', Sprite('door-back'), x-900, ground.top - 35, mainScene);
+  Chest(x-2350, ground.top, [Aji.copy(10), Aji.copy(0)]);
+  new Enemy(x-2100, ground.top, 100, 100, 300);
+  new Enemy(x-1800, ground.top, 85, 85, 230);
+  new Enemy(x-1300, ground.top, 50, 50, 120);
+  new Enemy(x-1300, ground.top, 40, 40, 100);
+  new EnemyWall(x-2300, ground.top);
+  Chest(x-100);
 
-}, 2000)
+}, 5000, -2450);
+let level2 = new Scene((x, y, ground) => {
+  new Door('Home', Sprite('door-back'), x-900, ground.top - 35, mainScene);
+  new Enemy(x-300, ground.top, 80, 80, 200);
+  EnemyWall(x-500, ground.top);
+  let tx0 = new game.Thing({
+    x: x+50,
+    bottom: ground.top,
+    background: Sprite('sugar-cane'),
+    width: 200,
+    height: 120,
+    custom: {
+      physics: true,
+      pass: true,
+      funcText: 'Collect Sugar',
+      funct: () => {
+        inventory.add(Sugar.copy());
+        tx0.custom.funct = null;
+      }
+    }
+  })
+  new Door('Level 3', Sprite('door'), x + 250, ground.top-35, level3);
+}, 2000, -800)
 let otherland = new Scene((x, y, ground) => {
-  new Door('Home', Sprite('door'), x, ground.top - 35, mainScene);
+  new Door('Home', Sprite('door-back'), x, ground.top - 35, mainScene);
   new Enemy(600+x, ground.top, 50, 50);
-  let thisthing = new game.Thing({
-    x: 300+x, 
-    bottom: ground.top+y,
-    background: 'red',
-    width: 80,
-    height: 40,
-    custom: {
-      physics: true,
-    }
-  });
-  new game.Thing({
-    left: 300+x, 
-    bottom: thisthing.top+y,
-    background: 'blue',
-    width: 40,
-    height: 40,
-    custom: {
-      physics: true,
-    }
-  });
-  EnemyWall(x+500, ground.top);
+  EnemyWall(x+200, ground.top);
   Chest(x+700, ground.top, [jalapeno.copy()]);
-  new Door('Level 2', Sprite('door', x+650, ground.top - 35, level2))
+  new Door('Level 2', Sprite('door'), x+600, ground.top - 35, level2);
 }, 2000);
 let mainScene = new Scene((x, y, ground) => {
   new game.Thing({
@@ -188,7 +208,7 @@ let mainScene = new Scene((x, y, ground) => {
       pass: true,
       funcText: 'Milk',
       funct: function() {
-        inventory.add(milk);
+        inventory.add(milk.copy());
         this.funct = null;
       }
     }
@@ -207,6 +227,7 @@ let mainScene = new Scene((x, y, ground) => {
   new Dirt(-625 + x, y);
   new Dirt(-750 + x, y);
   new Door('Another Land', Sprite('door'), 200 + x, ground.top - 35, otherland);
+  Chest(x+50, ground.top, [sweet.copy()]);
 }, 2000);
 var player = new game.Thing({
   name: 'player',
@@ -321,6 +342,7 @@ KEYS.bindKeyHold(['a', 'ArrowLeft'], e => { player.vel.x = -200; playerDir = "le
 KEYS.bindKeyHold(['d', 'ArrowRight'], e => { player.vel.x = 200; playerDir = "right"; })
 function Shoot() {
   if (player.weapon) {
+    player.weapon.use();
     let hs = new game.Thing({
       width: 12,
       height: 5,
@@ -331,7 +353,6 @@ function Shoot() {
         hotsauce: player.weapon
       }
     });
-    player.weapon.use();
     hs.when('draw', () => {
       if (game.numberDistance(hs.x, player.x) > ground.width) {
         hs.delete();
@@ -356,11 +377,12 @@ function Shoot() {
     alert('No hotsauce equipped')
   }
 }
-game.canvas.addEventListener("mousedown", event => {
-  if (event.pointerType === "mouse")
-    Shoot();
-})
+// game.canvas.addEventListener("mousedown", event => {
+//   if (event.pointerType === "mouse")
+//     Shoot();
+// })
 
+KEYS.bindKeyPressed('s', e => {Shoot();});
 KEYS.bindKeyPressed(' ', e => { Jump(); });
 KEYS.bindKeyPressed('c', Craft);
 const friction = 0.5;

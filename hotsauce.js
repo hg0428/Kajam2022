@@ -1,10 +1,11 @@
 class Ingredient {
   constructor(spiciness, name, img, imgScale) {
-    this.spiciness = spiciness; //–10 — 10
+    this.spiciness = spiciness || 0; //–10 — 10
     this.imgScale = imgScale || 1;
-    this.name = name;
+    this.name = name || 'Ingredient';
     this.img = img || '';
     this.growth = 10;
+    this.isIngredient = true;
   }
   copy() {
     return new Ingredient(this.spiciness, this.name, this.img, this.imgScale);
@@ -12,25 +13,26 @@ class Ingredient {
 }
 var Peppers = [];
 class Pepper extends Ingredient {
-  constructor(spiciness, name, growth = 10, grownImg = 'pepper.png', imgScale = 1.25) {
-    let add = ' pepper';
-    if (growth === 0) add += ' seeds';
-    super(spiciness, name + add);
-    this.baseName = name;
-    this.imgScale = imgScale;
-    this.img = grownImg;
-    this.grownImg = grownImg;
-    this.growth = growth; //out of 10
-    this.iSeeds = growth === 0; //is seeds
-    if (this.iSeeds)
-      this.img = 'pepper-seeds.png';
-    this.planted = false;
-    this.thing = null;
-    this.plant = null;
-    Peppers.push(this);
+  constructor(spiciness, name = "", growth = 10, grownImg = 'pepper.png', imgScale = 1.25, opts = {}) {
+      let add = ' pepper';
+      if (growth === 0) add += ' seeds';
+      super(spiciness || 0, name + add);
+      this.baseName = name;
+      this.imgScale = imgScale;
+      this.img = grownImg;
+      this.grownImg = grownImg;
+      this.growth = growth; //out of 10
+      this.iSeeds = growth === 0; //is seeds
+      if (this.iSeeds)
+        this.img = 'pepper-seeds.png';
+      this.planted = false;
+      this.thing = null;
+      this.plant = null;
+      this.isPepper = true;
+      Peppers.push(this);
   }
-  copy() {
-    return new Pepper(this.spiciness, this.baseName, this.growth, this.grownImg, this.imgScale);
+  copy(growth) {
+    return new Pepper(this.spiciness, this.baseName, growth || this.growth, this.grownImg, this.imgScale);
   }
   Plant(plant) {
     this.plant = plant;
@@ -133,7 +135,7 @@ class Hotsauce {
         player.weapon = null;
         alert('Your equipped hotsauce bottle ran out');
       }
-      inventory.remove(this);
+      console.log(inventory.remove(this));
     }
   }
 }

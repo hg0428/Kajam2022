@@ -26,7 +26,9 @@ class Door {
   }
 }
 class Scene {
-  constructor(scene, width = 2000) {
+  constructor(scene, width = 2000, spawnX = 0, spawnY = 0) {
+    this.spawnX = spawnX;
+    this.spawnY = spawnY;
     let last = Scenes[Scenes.length - 1];
     if (last) {
       this.x = last.ground.right + game.width + width / 2;
@@ -56,8 +58,8 @@ class Scene {
     this.scene = () => {
       ground = self.ground;
       self.load();
-      player.x = self.x;
-      player.bottom = self.ground.top;
+      player.x = self.x+self.spawnX;
+      player.bottom = self.ground.top+self.spawnY;
       game.camera.offsetX = -player.x;
       game.camera.offsetY = -player.y + game.bottom - 100;
     };

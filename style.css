@@ -205,3 +205,26 @@ html, body {
 #menu div:hover {
   background-color: rgba(10, 10, 10, 0.9);
 }
+#instructions {
+  padding: 10px;
+  padding-top:25px;
+  position: fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background: rgba(0, 0, 0, 0.91);
+  color: white;
+  line-height: 15px;
+}
+#instructions div {
+display: inline-block;
+}
+#goaway {
+  width: 100px;
+  height:75px;
+  font-size: 50px;
+  background-color: rgb(50, 50, 50);
+  color: white;
+  padding: 10px;
+}

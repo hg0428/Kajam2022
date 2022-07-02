@@ -13,6 +13,27 @@ function Craft() {
     }
   });
 }
+let savedInventory;
+//localStorage.setItem('inventory', JSON.stringify({contents:[]}))
+try {
+  savedInventory = JSON.parse(localStorage.getItem('inventory') || '{contents:[]}');
+}
+catch {
+  savedInventory = {contents:[]};
+}
+function saveInventory() {
+  let contents = [];
+  for (let i in inventory.slots) {
+    let val = inventory.slots[i].contains;
+    if (!val) continue;
+    let type = '';
+    if (val.isPepper) type="Pepper";
+    else if (val.isIngredient) type="Ingredient";
+    else if (val.isHotsauce) type="Hotsauce";
+    contents.push({type, val});
+  }
+  localStorage.setItem('inventory', JSON.stringify({contents}))
+};
 const Done = document.getElementById('craft-done');
 const menu = document.getElementById('menu');
 const Equip = document.getElementById('Equip');
@@ -38,11 +59,14 @@ let inventory = {
         slot.element.onclick = () => {
           menu.style.display = 'block';
 					Drink.onclick = () => {
+            if (!slot.contains.isHotsauce) return alert('You can only drink Hotsauces. Press c to craft a Hotsauce');
             player.drink(slot.contains);
             inventory.hide();
           };
           Equip.onclick = () => {
+            if (!slot.contains.isHotsauce) return alert('You can only equip Hotsauces');
             player.weapon = slot.contains;
+            player.weapon.ammo = 10;
             inventory.hide();
           };
         }
@@ -53,6 +77,7 @@ let inventory = {
     for (let i in this.slots) {
       this.updateSlot(i);
     }
+    saveInventory();
   },
   show() {
     this.element.style.display = 'grid';
@@ -80,14 +105,16 @@ let inventory = {
     }
   },
   remove(item) {
-    for (let i = this.slots.length; i > 0; i--) {
+    for (let i in this.slots) {
       //loop to remove it from the first slot it can find that contains it.
       let slot = this.slots[i];
-      if (slot.contains == item)
+      if (slot.contains === item || slot.contains == item) {
         slot.contains = null;
-      this.updateSlot(i);
-      break;
+        this.updateAll();
+        return true;
+      }
     }
+    return false;
   },
   select(complete, max=100) {
     this.updateAll();
@@ -132,12 +159,23 @@ for (let i = 0; i < 28; i++) {
 inventory.hide();
 let sweet = new Pepper(1, 'Sweet', 0);
 let jalapeno = new Pepper(2.4, 'jalapeno', 0, 'jalapeno.png', 3)
+let Aji = new Pepper(5, 'Aji Fantasy');
 let ghost = new Pepper(8, 'Ghost');
 let Moruga = new Pepper(10, 'Moruga Scorpion');
 let creaper = new Pepper(11, 'Carolina Reaper');
 let Sugar = new Ingredient(-2, 'Sugar');
 let milk = new Ingredient(-5, 'Milk', 'milk.png');
-let LemonJuice = new Ingredient(-8, 'Lemon Juice')
-inventory.add(sweet.copy());
-inventory.add(milk.copy());
-inventory.add(sweet.copy());
+let LemonJuice = new Ingredient(-8, 'Lemon Juice');
+for (let val of savedInventory.contents) {
+  if (val) {
+    if (val.type == 'Pepper') {
+      val = Object.assign(new Pepper(), val.val)
+    } else if (val.type == 'Ingredient') {
+      val = Object.assign(new Ingredient(), val.val)
+    } else if (val.type == 'Hotsauce') {
+      val = Object.assign(new Hotsauce(), val.val)
+    }
+  }
+  inventory.add(val);
+}
+setInterval(saveInventory, 100);
