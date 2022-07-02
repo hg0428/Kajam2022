@@ -192,7 +192,7 @@ canvas {
 #menu div:hover {
   background-color: rgba(10, 10, 10, 0.9);
 }
-#instructions {
+#instructions, #story {
   padding: 10px;
   padding-top:25px;
   position: fixed;
@@ -206,9 +206,14 @@ canvas {
 }
 #instructions div {
   word-break:break-all;
-display: inline-block;
+  display: inline-block;
 }
-#goaway {
+#story div{
+  font-size: 20px;
+  line-height: 25px;
+  padding: 20px;
+}
+#goaway, #goaway2 {
   width: 100px;
   height:75px;
   font-size: 50px;
