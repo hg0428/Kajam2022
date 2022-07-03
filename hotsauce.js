@@ -13,7 +13,7 @@
 }
 var Peppers = [];
 class Pepper extends Ingredient {
-  constructor(spiciness, name = "", growth = 10, grownImg = 'pepper.png', imgScale = 1.25, opts = {}) {
+  constructor(spiciness, name = "", growth = 10, grownImg = 'pepper.png', imgScale = 1.25) {
     let add = ' pepper';
     if (growth === 0) add += ' seeds';
     super(spiciness || 0, name + add);
@@ -32,11 +32,17 @@ class Pepper extends Ingredient {
     Peppers.push(this);
   }
   copy(growth) {
-    let p = new Pepper(this.spiciness, this.baseName, growth || this.growth, this.grownImg, this.imgScale);
+    console.log(growth, this.growth);
+    growth = growth ?? this.growth ?? 10;
+
+    let p = new Pepper(this.spiciness, this.baseName, growth, this.grownImg, this.imgScale);
+    console.log(p.growth, typeof p, p.isPepper);
     p.growth = growth;
+    console.log(p.growth);
     p.iSeeds = growth === 0;
     if (p.iSeeds)
       p.img = 'pepper-seeds.png';
+    console.log(p.growth);
     return p
   }
   Plant(plant) {

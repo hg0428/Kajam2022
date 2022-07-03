@@ -162,7 +162,7 @@ class Dirt {
               self.plant.Plant(self);
               slot.contains = null;
               self.thing.custom.funct = null;
-            } else if (slot.contains.isPepper) {
+            } else if (!slot.contains.isPepper) {
               alert('You only know how to farm Peppers!!!!');
               return;
             } else {
