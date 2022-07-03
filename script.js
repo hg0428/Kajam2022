@@ -1,4 +1,4 @@
-'use strict';
+ 'use strict';
 let goaway = document.getElementById('goaway');
 let goaway2 = document.getElementById('goaway2');
 goaway.onclick = () => {

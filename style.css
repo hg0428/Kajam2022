@@ -1,4 +1,4 @@
-html, body { 
+ html, body { 
   height: 100%;
   width: 100%;
   margin: 0;
@@ -193,6 +193,7 @@ canvas {
   background-color: rgba(10, 10, 10, 0.9);
 }
 #instructions, #story {
+  overflow: scroll;
   padding: 10px;
   padding-top:25px;
   position: fixed;
@@ -217,9 +218,13 @@ canvas {
   width: 100px;
   height:75px;
   font-size: 50px;
-  background-color: rgb(50, 50, 50);
+  background-color: rgba(50, 50, 50, 0.9);
   color: white;
   padding: 10px;
+  border-radius: 5px;
+}
+#goaway:hover, #goaway2:hover {
+  background-color: rgb(30, 30, 30);
 }
 @media screen and (max-width: 640px) {
   #inventory {
@@ -242,6 +247,13 @@ canvas {
   }
   #menu div {
     font-size: 22px;
+  }
+  #instructions, #story {
+    padding: 5px;
+    padding-top:15px;
+  }
+  #story div{
+    font-size: 17px;
   }
 }
 @media screen and (max-width: 400px) {

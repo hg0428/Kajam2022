@@ -1,4 +1,4 @@
-document.addEventListener('touchstart', () => {
+ document.addEventListener('touchstart', () => {
   let btns = document.getElementsByClassName('touch');
   for (let btn of btns) {
     btn.style.display = 'inline-block';

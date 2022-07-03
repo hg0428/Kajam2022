@@ -1,4 +1,4 @@
-class Ingredient {
+ class Ingredient {
   constructor(spiciness, name, img, imgScale) {
     this.spiciness = spiciness || 0; //–10 — 10
     this.imgScale = imgScale || 1;

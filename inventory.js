@@ -1,4 +1,4 @@
-function Craft() {
+ function Craft() {
   inventory.select((selections) => {
     let l = [];
     for (let slot of selections) {

@@ -17,7 +17,7 @@ class Door {
         funcText: `To ${name}`,
         funct: () => {
           loadScene(player, scene);
-          reset();
+          reset(); 
           actionBtn.style.display = 'none';
         }
       }
