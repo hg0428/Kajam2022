@@ -32,17 +32,13 @@ class Pepper extends Ingredient {
     Peppers.push(this);
   }
   copy(growth) {
-    console.log(growth, this.growth);
     growth = growth ?? this.growth ?? 10;
 
     let p = new Pepper(this.spiciness, this.baseName, growth, this.grownImg, this.imgScale);
-    console.log(p.growth, typeof p, p.isPepper);
     p.growth = growth;
-    console.log(p.growth);
     p.iSeeds = growth === 0;
     if (p.iSeeds)
       p.img = 'pepper-seeds.png';
-    console.log(p.growth);
     return p
   }
   Plant(plant) {
@@ -146,7 +142,7 @@ class Hotsauce {
         player.weapon = null;
         alert('Your equipped hotsauce bottle ran out');
       }
-      console.log(inventory.remove(this));
+      inventory.remove(this);
     }
   }
 }

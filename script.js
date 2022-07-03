@@ -25,7 +25,6 @@ const actionBtn = document.getElementById('action-btn');
 let Enemies = [];
 class Enemy {
   constructor(x, bottom, width, height, health = 100, left='enemyl', right='enemyr') {
-    console.log(left, right);
     this.left = left;
     this.right = right;
     let thing = this.thing = new game.Thing({
