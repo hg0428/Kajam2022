@@ -32,7 +32,12 @@ class Pepper extends Ingredient {
     Peppers.push(this);
   }
   copy(growth) {
-    return new Pepper(this.spiciness, this.baseName, growth || this.growth, this.grownImg, this.imgScale);
+    let p = new Pepper(this.spiciness, this.baseName, growth || this.growth, this.grownImg, this.imgScale);
+    p.growth = growth;
+    p.iSeeds = growth === 0;
+    if (p.iSeeds)
+      p.img = 'pepper-seeds.png';
+    return p
   }
   Plant(plant) {
     this.plant = plant;
