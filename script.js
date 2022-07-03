@@ -156,14 +156,17 @@ class Dirt {
         inventory.select((selections) => {
           if (selections.size > 0) {
             let [slot] = selections;
-            if (slot.contains instanceof Pepper && slot.contains.growth < 10) {
+            if (slot.contains.isPepper && slot.contains.growth < 10) {
               self.hasPlant = true;
               self.plant = slot.contains;
               self.plant.Plant(self);
               slot.contains = null;
               self.thing.custom.funct = null;
-            } else {
+            } else if (slot.contains.isPepper) {
               alert('You only know how to farm Peppers!!!!');
+              return;
+            } else {
+              alert('Fully grown peppers can not be planted');
               return;
             }
           }
