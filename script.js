@@ -226,6 +226,7 @@ let level9 = new Scene((x, y, ground) => {
   new Enemy(x - 600, ground.top, 70, 70, 100);
   new Enemy(x + 200, ground.top, 300, 300, 800, 'e2l', 'e2r');
   Chest(x + 700, ground.top, [ghost.copy(0)]);
+  Message(x + 700, ground.top, 'You did it!');
 }, 2000, -975);
 let level8 = new Scene((x, y, ground) => {
   new Door('Paradise', Sprite('door-back'), x-975, ground.top - 35, paradise);
@@ -294,6 +295,7 @@ let paradise = new Scene((x, y, ground) => {
 }, 3000, 0);
 let level4 = new Scene((x, y, ground) => {
   new Message(x - 950, ground.bottom, 'The door home is at the end');
+  new Message(x - 900, ground.bottom, "You are about to fight the Emperor's General, who happens to look dress him.");
   new Enemy(x - 200, ground.top, 50, 50, 120);
   new Enemy(x - 220, ground.top, 40, 40, 100);
   new Enemy(x - 240, ground.top, 200, 200, 1000, 'e2l', 'e2r');

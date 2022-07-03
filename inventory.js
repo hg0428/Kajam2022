@@ -1,4 +1,4 @@
- function Craft() {
+function Craft() {
   inventory.select((selections) => {
     let l = [];
     for (let slot of selections) {
@@ -59,8 +59,8 @@ let inventory = {
       slot.element.onclick = () => {
         let rect = slot.element.getBoundingClientRect();
         menu.style.display = 'block';
-        menu.style.left = `${rect.right+10}px`;
-        menu.style.top = `${rect.bottom+10}px`;
+        menu.style.left = `${rect.right-rect.width/4}px`;
+        menu.style.top = `${rect.bottom-rect.height/4}px`;
         Drink.onclick = () => {
           if (!slot.contains.isHotsauce) return alert('You can only drink Hotsauces. Press c to craft a Hotsauce');
           player.drink(slot.contains);
